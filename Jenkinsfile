@@ -1,19 +1,37 @@
 pipeline{
     agent any
+
+    tools {nodejs "nodejs"}
+
     stages{
-        stage("A"){
+        stage("Install Dependecies"){
             steps{
-                echo "========executing A========"
+                sh 'npm install'
             }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
+            
+        }
+        stage("Run Linting Checks"){
+            steps{
+                sh 'npm run lint'
+            }
+            
+        }
+        stage("Run Unit Tests"){
+            steps{
+                sh 'npm run test'
+            }
+            
+        }
+        stage("Build"){
+            steps{
+                sh 'npm run build'
+            }
+            
+        }
+        stage("Deploy to S3"){
+            steps{
+                withAWS(region:'eu-west-1',credentials:'aws-cred') {
+                    sh 'aws s3 sync ./dist s3://glowing-robot --delete'
                 }
             }
         }
