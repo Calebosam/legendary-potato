@@ -29,9 +29,13 @@ pipeline{
             
         }
         stage("Deploy to S3"){
+            when {
+                branch 'main';
+            }
             steps{
                 withAWS(region:'eu-west-1',credentials:'aws-cred') {
                     sh 'aws s3 sync ./dist s3://glowing-robot --delete'
+                    echo 'Application Live here: https://glowing-robot.s3.eu-west-1.amazonaws.com/index.html'
                 }
             }
         }
