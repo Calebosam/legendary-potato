@@ -34,8 +34,8 @@ pipeline{
             }
             steps{
                 withAWS(region:'eu-west-1',credentials:'aws-cred') {
-                    sh 'aws s3 sync ./dist s3://glowing-robot --delete'
-                    echo 'Application Live here: https://glowing-robot.s3.eu-west-1.amazonaws.com/index.html'
+                    sh 'aws s3 sync ./dist s3://legendary-potato --delete'
+                    echo 'Application Live here: https://legendary-potato.s3.eu-west-1.amazonaws.com/index.html'
                 }
             }
         }
