@@ -33,7 +33,9 @@ jobs:
     steps:
     - name: Deploy Image to VM
       run: |
-        ssh -i ${{ secrets.VM_SSH_KEY }} -o StrictHostKeyChecking=no ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << EOF
+        echo "${{ secrets.VM_SSH_KEY }}" > ssh_key.pem
+        chmod 600 ssh_key.pem
+        ssh -i ssh_key.pem -o StrictHostKeyChecking=no ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << EOF
           docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} -p "${{ secrets.ACR_PASSWORD }}"
           docker pull ${{ secrets.ACR_LOGIN_SERVER }}/legendary-potato:latest
           docker stop legendary-potato || true
