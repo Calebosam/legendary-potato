@@ -38,5 +38,5 @@ jobs:
           docker pull ${{ secrets.ACR_LOGIN_SERVER }}/legendary-potato:latest
           docker stop legendary-potato || true
           docker rm legendary-potato || true
-          docker run -d --name legendary-potato -p 80:80 ${{ secrets.ACR_LOGIN_SERVER }}/legendary-potato:latest
+          docker run -d --name legendary-potato -p 8080:80 ${{ secrets.ACR_LOGIN_SERVER }}/legendary-potato:latest
         EOF
